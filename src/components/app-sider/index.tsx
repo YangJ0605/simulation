@@ -1,4 +1,5 @@
-import React, { memo } from 'react'
+import React, { memo} from 'react'
+import {Link, withRouter, RouteComponentProps} from 'react-router-dom'
 
 import { routeMenu } from '@/router'
 
@@ -8,12 +9,14 @@ import { AppSiderWrapper } from './style'
 
 const { SubMenu } = Menu
 
-type IProps = {
+
+interface IProps extends RouteComponentProps {
     collapsed: boolean
 }
 
-export default memo(function AppSider(props: IProps) {
-    const { collapsed } = props
+function AppSider(props: IProps) {
+    const { collapsed, location: {pathname}} = props
+    
     return (
         <AppSiderWrapper>
             <div className='header'>
@@ -21,7 +24,10 @@ export default memo(function AppSider(props: IProps) {
                 {collapsed ? '' : (<span className='title'>Simulation</span>)}
             </div>
             <div className='menu'>
-                <Menu mode='inline'>
+                <Menu mode='inline' 
+                      defaultOpenKeys={['NAVIGATION', 'SERVICE']}
+                      defaultSelectedKeys={[pathname]}
+                      >
                     {
                         routeMenu.map(item => {
                             return (
@@ -29,8 +35,8 @@ export default memo(function AppSider(props: IProps) {
                                     {
                                         item.children?.map(item2 => {
                                             return (
-                                                <Menu.Item key={item2.title}>
-                                                    {item2.title}
+                                                <Menu.Item key={item2.path}>
+                                                   <Link to={item2.path}>{item2.title}</Link>
                                                 </Menu.Item>
                                             )
                                         })
@@ -43,4 +49,6 @@ export default memo(function AppSider(props: IProps) {
             </div>
         </AppSiderWrapper>
     )
-})
+}
+
+export default withRouter(memo(AppSider))

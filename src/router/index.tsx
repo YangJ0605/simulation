@@ -28,13 +28,14 @@ const routes:RouteConfig[] = [
 
 type RouteMenuItem = {
     title: string,
-    path?: string,
+    path: string,
     children?: RouteMenuItem[] 
 }
 
 export const routeMenu:RouteMenuItem[] = [
     {
         title: 'NAVIGATION',
+        path: '/dashboard',
         children: [
             {
                 title: 'Dashboard',
@@ -44,6 +45,7 @@ export const routeMenu:RouteMenuItem[] = [
     },
     {
         title: 'SERVICE',
+        path: '/scenarios',
         children: [
             {
                 title: 'Scenarios',

@@ -31,6 +31,13 @@ export const AppSiderWrapper = styled.div`
         .ant-menu {
           background: #3f4d67;
           color: #fff;
+          a {
+          color: #fff;
+          }
+          .ant-menu-item-selected {
+            color: #1dc4e9;
+            background: #1dc4e9;
+          }
         }
     }
 `
