@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {HashRouter as Router} from 'react-router-dom'
+import {renderRoutes} from 'react-router-config'
+
+import routes from './router'
+
+import { Layout} from 'antd'
+import AppSider from '@/components/app-sider'
+import AppHeader from '@/components/app-header'
+const { Header, Sider, Content } = Layout
 
 function App() {
+  const [collapsed, setCollapsed] = useState<boolean>(false)
+  const toggle = () => {
+    setCollapsed(!collapsed)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Layout>
+        <Sider className='app-sider' trigger={null} collapsible collapsed={collapsed}>
+          <AppSider collapsed={collapsed}/>
+        </Sider>
+        <Layout>
+          <Header style={{padding:0, background: '#f4f7fa'}}>
+            <AppHeader toggle={toggle} collapsed={collapsed}/>
+          </Header>
+          <Content style={{background: '#f4f7fa'}}>
+            {renderRoutes(routes)}
+          </Content>
+        </Layout>
+      </Layout>
+    </Router>
   );
 }
 
